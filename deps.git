@@ -1,6 +1,17 @@
+bonfire_messages = "https://github.com/bonfire-networks/bonfire_messages"
+bonfire_ui_messages = "https://github.com/bonfire-networks/bonfire_ui_messages"
+
+bonfire_ui_reactions = "https://github.com/bonfire-networks/bonfire_ui_reactions"
+
 bonfire_poll = "https://github.com/bonfire-networks/bonfire_poll"
+
 bonfire_label = "https://github.com/bonfire-networks/bonfire_label"
+
 bonfire_classify = "https://github.com/bonfire-networks/bonfire_classify"
+
+bonfire_search = "https://github.com/bonfire-networks/bonfire_search"
+
+bonfire_invite_links= "https://github.com/bonfire-networks/bonfire_invite_links"
 
 bonfire_api_graphql = "https://github.com/bonfire-networks/bonfire_api_graphql"
 # absinthe_client = "https://github.com/bonfire-networks/absinthe_client"
