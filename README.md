@@ -1,8 +1,13 @@
 # Social
 
-A new bonfire extension created using [the generator](https://docs.bonfirenetworks.org/create-a-new-extension.html) 
+A flavour of [Bonfire](https://bonfirenetworks.org/) that bundles essential extensions from [Ember](https://github.com/bonfire-networks/ember) and adds the following:
 
-NOTE: update this readme when you create a new extension.
+- [Bonfire.Classify](https://github.com/bonfire-ecosystem/bonfire_classify) - categories & classifications in taxonomies
+- [Bonfire.Label](https://github.com/bonfire-ecosystem/bonfire_label) - content labelling
+- [Bonfire.OpenID](https://github.com/bonfire-ecosystem/bonfire_open_id) - authentication using OAuth and/or OpenID Connect, as client or provider 
+- [Bonfire.API.GraphQL](https://github.com/bonfire-ecosystem/bonfire_api_graphql) - API for developers or other apps to plug into Bonfire
+<!-- - [Bonfire.UI.Topics](https://github.com/bonfire-ecosystem/bonfire_ui_topics) - topics -->
+<!-- - [Bonfire.Geolocate](https://github.com/bonfire-ecosystem/bonfire_geolocate) - places and maps -->
 
 
 ## Copyright and License
