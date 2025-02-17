@@ -16,6 +16,8 @@ bonfire_search = "https://github.com/bonfire-networks/bonfire_search"
 
 bonfire_invite_links= "https://github.com/bonfire-networks/bonfire_invite_links"
 
+bonfire_data_shared_user = "https://github.com/bonfire-networks/bonfire_data_shared_user"
+
 bonfire_api_graphql = "https://github.com/bonfire-networks/bonfire_api_graphql"
 # absinthe_client = "https://github.com/bonfire-networks/absinthe_client"
 
