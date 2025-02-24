@@ -16,11 +16,13 @@ AUTO_YES=false
 for arg in "$@"; do
     case $arg in
         -y|--yes)
-            AUTO_YES=true
+            echo "Existing files will be overridden without prompting"
+            export AUTO_YES=true
             shift
             ;;
     esac
 done
+
 
 # Show mode
 if [ "$AUTO_YES" = true ]; then
