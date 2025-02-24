@@ -1,4 +1,4 @@
-Code.eval_file("mess.exs", (if File.exists?("../../lib/mix/mess.exs"), do: "../../lib/mix/"))
+Code.eval_file("mess.exs", if(File.exists?("../../lib/mix/mess.exs"), do: "../../lib/mix/"))
 
 defmodule Social.MixProject do
   use Mix.Project
@@ -13,17 +13,16 @@ defmodule Social.MixProject do
       ]
     else
       []
-    end
-    ++
-    [
-      app: :social,
-      version: "0.0.1",
-      elixir: "~> 1.10",
-      elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: Mix.compilers(),
-      start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
-      description: "A flavour of Bonfire",
+    end ++
+      [
+        app: :social,
+        version: "0.0.1",
+        elixir: "~> 1.10",
+        elixirc_paths: elixirc_paths(Mix.env()),
+        compilers: Mix.compilers(),
+        start_permanent: Mix.env() == :prod,
+        aliases: aliases(),
+        description: "A flavour of Bonfire",
         homepage_url: "https://bonfirenetworks.org/",
         source_url: "https://github.com/bonfire-networks/social",
         package: [
@@ -39,15 +38,18 @@ defmodule Social.MixProject do
           # extra pages to include
           extras: ["README.md"]
         ],
-      deps:
-        Mess.deps([
-          {:phoenix_live_reload, "~> 1.2", only: :dev},
-
-          {:floki, ">= 0.0.0", only: [:dev, :test]},
-
-          {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
-        ])
-    ]
+        deps:
+          Mess.deps([
+            {:phoenix_live_reload, "~> 1.2", only: :dev},
+            # {:floki, ">= 0.0.0", only: [:dev, :test]},
+            {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
+            {
+              :igniter,
+              "~> 0.5",
+              override: true
+            }
+          ])
+      ]
   end
 
   def application, do: [extra_applications: [:logger, :runtime_tools]]
