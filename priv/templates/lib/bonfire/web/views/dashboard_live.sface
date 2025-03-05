@@ -12,7 +12,7 @@
         feed_id={Bonfire.Social.Feeds.my_feed_id(:inbox, e(@__context__, :socket, nil))}
         feed_name={:my}
         feed_title={l("My Following")}
-        hide_tabs
+        hide_filters
       />
     {#match :curated}
       <!-- TODO: cache -->
@@ -22,7 +22,7 @@
         feed_id={:curated}
         feed_name={:curated}
         feed_title={l("Curated Activities")}
-        hide_tabs
+        hide_filters
       />
     {#match :popular}
       <StatelessComponent module={maybe_component(Bonfire.UI.Social.WidgetDiscussionsLive, @__context__)} />
