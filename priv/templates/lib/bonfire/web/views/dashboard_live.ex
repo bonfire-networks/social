@@ -33,7 +33,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
                 [Bonfire.Web.Views.DashboardLive, :include, :recent_users],
                 true,
                 current_user: current_user
-              ) && {Bonfire.UI.Me.WidgetHighlightUsersLive, []}
+              )
             ],
             & &1
           )
