@@ -1,14 +1,27 @@
 #!/bin/bash
 
-# Function to copy with diff and prompt
 copy_with_prompt() {
+    local src="$1"
+    local dest="$2"
+
+    if [ -d "$src" ]; then
+        # If it's a directory, call copy_dir_with_prompt recursively
+        copy_dir_with_prompt "$src" "$dest"
+    elif [ -f "$src" ]; then
+        # If it's a file, call copy_file_with_prompt
+        copy_file_with_prompt "$src" "$dest"
+    fi
+}
+
+# Function to copy with diff and prompt
+copy_file_with_prompt() {
     local src="$1"
     local dest="$2"
     local cwd=$(pwd)
 
     # Check if source and destination are the same file
     if cmp -s "$src" "$dest"; then
-        echo "Source and destination are identical, skipping: $dest"
+        echo "Source and destination are identical, skipping: $src"
     else
         # If AUTO_YES is true, skip diffing and copy the file directly
         if [ "$AUTO_YES" = true ]; then
@@ -66,13 +79,7 @@ copy_dir_with_prompt() {
         base_name=$(basename "$src_file")
         dest_file="$dest_dir/$base_name"
 
-        if [ -d "$src_file" ]; then
-            # If it's a directory, call copy_dir_with_prompt recursively
-            copy_dir_with_prompt "$src_file" "$dest_file"
-        elif [ -f "$src_file" ]; then
-            # If it's a file, call copy_with_prompt
-            copy_with_prompt "$src_file" "$dest_file"
-        fi
+        copy_with_prompt "$src_file" "$dest_file"
     done
 }
 
@@ -93,10 +100,8 @@ copy_glob_with_prompt() {
     fi
     
     for src_file in "$src_dir"/$glob_pattern; do
-        if [ -f "$src_file" ]; then
-            dest_file="$dest_dir/$(basename "$src_file")"
-            copy_with_prompt "$src_file" "$dest_file"
-        fi
+        dest_file="$dest_dir/$(basename "$src_file")"
+        copy_with_prompt "$src_file" "$dest_file"
     done
 }
 
