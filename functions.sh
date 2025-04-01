@@ -3,6 +3,13 @@
 copy_with_prompt() {
     local src="$1"
     local dest="$2"
+    
+    # If destination is a directory and doesn't have a filename, add the source filename
+    if [ -d "$dest" ] && [ -f "$src" ]; then
+        # Get just the filename from src
+        local filename=$(basename "$src")
+        dest="${dest%/}/$filename"  # Ensure no trailing slash before adding filename
+    fi
 
     if [ -d "$src" ]; then
         # If it's a directory, call copy_dir_with_prompt recursively
@@ -13,7 +20,7 @@ copy_with_prompt() {
     fi
 }
 
-# Function to copy with diff and prompt
+# Function to copy file with diff and prompt
 copy_file_with_prompt() {
     local src="$1"
     local dest="$2"
