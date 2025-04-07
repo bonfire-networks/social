@@ -4,5 +4,6 @@ defmodule Bonfire.Posts.Repo.Migrations.Import do
 
   import Bonfire.Posts.Migrations
 
-  def change, do: migrate_posts()
+  def up, do: migrate_posts(:up)
+  def down, do: migrate_posts(:down) 
 end

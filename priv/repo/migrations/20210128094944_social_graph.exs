@@ -4,5 +4,6 @@ defmodule Bonfire.Social.Graph.Repo.Migrations.Import do
 
   import Bonfire.Social.Graph.Migrations
 
-  def change, do: migrate_social_graph()
+  def up, do: migrate_social_graph(:up)
+  def down, do: migrate_social_graph(:down)
 end

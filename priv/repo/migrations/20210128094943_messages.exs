@@ -4,5 +4,6 @@ defmodule Bonfire.Messages.Repo.MessagesMigrations do
 
   import Bonfire.Messages.Migrations
 
-  def change, do: migrate_messages()
+  def up, do: migrate_messages(:up)
+  def down, do: migrate_messages(:down) 
 end
