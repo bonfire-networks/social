@@ -23,6 +23,8 @@ defmodule Social.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       # import Social.DataCase
+
+      @moduletag :backend
     end
   end
 
