@@ -3,7 +3,7 @@
 absinthe = "~> 1.7.0"
 
 # Auth
-eqrcode = "~> 0.1.10"
+eqrcode = "~> 0.2.1"
 
 # Geo
 geo_postgis = "~> 3.1"
