@@ -2,7 +2,7 @@ import Config
 
 #### Flavour-specific compile-time configuration goes here, everything else should be in `Social.RuntimeConfig`
 
-config :bonfire_social, Bonfire.Social.Pins, modularity: :disabled
+# config :bonfire_social, Bonfire.Social.Pins, modularity: :disabled
 # config :bonfire_social, Bonfire.Social.Answers, modularity: :disabled
 
 # config :bonfire_label, modularity: :disabled
@@ -15,9 +15,9 @@ config :bonfire_ui_boundaries, Bonfire.Boundaries.Locking.LiveHandler, modularit
 # config :bonfire_ui_reactions, Bonfire.UI.Reactions.BookmarksLive, modularity: :disabled
 # config :bonfire_ui_reactions, Bonfire.UI.Reactions.BookmarkActionLive, modularity: :disabled
 
-config :bonfire_ui_social, Bonfire.Social.Pins, modularity: :disabled
+# config :bonfire_ui_social, Bonfire.Social.Pins, modularity: :disabled
 config :bonfire_label, Bonfire.Label.Web.ContentLabelLive, modularity: :disabled
-config :bonfire_ui_reactions, Bonfire.UI.Reactions.PinActionLive, modularity: :disabled
+# config :bonfire_ui_reactions, Bonfire.UI.Reactions.PinActionLive, modularity: :disabled
 
 config :bonfire, :ui,
   default_nav_extensions: [
