@@ -16,6 +16,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
     is_guest? = is_nil(current_user)
 
     sidebar_widgets = [
+
       users: [
         secondary:
           Enum.filter(
@@ -71,7 +72,14 @@ defmodule Bonfire.Web.Views.DashboardLive do
        feed_ids: nil,
        feed_component_id: nil,
        page_info: nil,
-       show_search_filters: false
+       show_search_filters: false,
+        page_header_aside: [
+         {Bonfire.UI.Common.SmartInputButtonLive,
+          [
+            prompt: l("Compose"),
+            class: "btn-sm max-w-[100px] hidden md:flex btn btn-primary"
+          ]}
+       ],
      )
      # TODO: only assign for native?
      |> assign(tab_assigns("home"))}
@@ -115,11 +123,11 @@ defmodule Bonfire.Web.Views.DashboardLive do
   #   }
   # end
 
-  def handle_event("select_tab", %{"selection" => tab}, socket) do
-    {:noreply,
-     socket
-     |> assign(tab_assigns(tab))}
-  end
+  # def handle_event("select_tab", %{"selection" => tab}, socket) do
+  #   {:noreply,
+  #    socket
+  #    |> assign(tab_assigns(tab))}
+  # end
 
   def tab_assigns(tab) do
     {header_menu, toolbar_trailing, navigation_menu, page_title} =
