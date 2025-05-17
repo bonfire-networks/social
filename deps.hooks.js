@@ -23,7 +23,7 @@ let ExtensionHooks = {};
 // import { ComposerHooks } from "./../../deps/bonfire_ui_common/assets/js/composer"
 // import { CodeHooks } from "./../../deps/bonfire_ui_common/assets/js/code"
 
-import { GeolocateHooks } from "./../../extensions/bonfire_geolocate/assets/js/extension"
+import { GeolocateHooks } from "./../../deps/bonfire_geolocate/assets/js/extension"
 // import { KanbanHooks } from "./../../deps/bonfire_ui_kanban/assets/js/extension"
 
 // import { EncryptHooks } from "./../../deps/bonfire_encrypt/assets/js/extension"
