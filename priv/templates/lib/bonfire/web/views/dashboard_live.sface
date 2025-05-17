@@ -12,9 +12,22 @@
     <h1 class="text-2xl text-base-content text-center font-bold">{Config.get([:ui, :theme, :instance_name], Bonfire.Application.name())}</h1>
     <h2 class="text-lg text-center font-medium text-base-content780">{Config.get([:ui, :theme, :instance_tagline], "Welcome to #{Bonfire.Application.name()}")}</h2>
   </div>
-  <!-- TODO: use WidgetsLive here, so the list and order can be changed in config & user settings -->
+  {!-- TODO: use WidgetsLive here, so the list and order can be changed in config & user settings --}    
   {#case @default_feed}
-    {#match true}
+    {#match :curated}
+      {!-- TODO: cache --}
+      <StatefulComponent
+        module={maybe_component(Bonfire.UI.Social.FeedLive, e(@__context__, :socket, nil))}
+        id={ComponentID.new(Bonfire.UI.Social.FeedLive, :curated, __MODULE__)}
+        feed_id={:curated}
+        feed_name={:curated}
+        feed_title={l("Curated Activities")}
+        hide_filters
+      />
+    {!-- {#match :popular}
+      <StatelessComponent module={maybe_component(Bonfire.UI.Social.WidgetDiscussionsLive, @__context__)} /> --}
+
+    {#match feed when feed in [:my, true]}
       <StatefulComponent
         module={maybe_component(Bonfire.UI.Social.FeedLive, e(@__context__, :socket, nil))}
         id={ComponentID.new(
@@ -27,24 +40,12 @@
         feed_title={l("My Following")}
         hide_filters
       />
-    {#match :curated}
-      <!-- TODO: cache -->
-      <StatefulComponent
-        module={maybe_component(Bonfire.UI.Social.FeedLive, e(@__context__, :socket, nil))}
-        id={ComponentID.new(Bonfire.UI.Social.FeedLive, :curated, __MODULE__)}
-        feed_id={:curated}
-        feed_name={:curated}
-        feed_title={l("Curated Activities")}
-        hide_filters
-      />
-    <!-- {#match :popular}
-      <StatelessComponent module={maybe_component(Bonfire.UI.Social.WidgetDiscussionsLive, @__context__)} /> -->
     {#match _}
       <div class="border border-primary/30  border-dashed rounded-xl p-4 flex flex-col gap-4 m-4 text-center text-base-content/80 flex items-center place-content-center flex-col">
-        <div>{l "In the future, you will be able to customize your dashboard and add widgets here."}</div>
-        <Link class="link link-primary flex items-center gap-2" to={~p"/settings/user/dashboard"}>
+        <div>{l "You can customise your dashboard by adding widgets here."}</div>
+        <LinkLive class="link link-primary flex items-center gap-2" to={~p"/settings/user/dashboard"}> 
         <#Icon iconify="ph:gear-fill" class="w-5 h-5" />
-        {l "Configure"}</Link>
+        {l "Configure"}</LinkLive>
       </div>
       <!-- <StatelessComponent module={maybe_component(Bonfire.UI.Social.WidgetDiscussionsLive, @__context__)} /> -->
   {/case}
