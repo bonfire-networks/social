@@ -12,7 +12,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
   on_mount {LivePlugs, [Bonfire.UI.Me.LivePlugs.LoadCurrentUser]}
 
   def mount(_params, _session, socket) do
-    current_user = current_user(assigns(socket))
+    current_user = current_user(socket)
     is_guest? = is_nil(current_user)
 
     sidebar_widgets = [
