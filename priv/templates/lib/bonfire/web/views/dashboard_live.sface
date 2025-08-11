@@ -1,7 +1,7 @@
 <section data-id="user_dashboard" class="">
 <div class={
-  "flex flex-col shadow rounded-xl bg-base-100 gap-2",
-  "shadow-sm rounded-xl border border-base-content/10": !current_user_id(@__context__)
+  "flex flex-col bg-base-100 gap-2",
+  "border border-base-content/10": !current_user_id(@__context__)
 }>
   <div
     style={"background-image: url(#{Config.get([:ui, :theme, :instance_image], nil)});height: 220px;"}
