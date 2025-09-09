@@ -77,6 +77,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
          {Bonfire.UI.Common.SmartInputButtonLive,
           [
             prompt: l("Compose"),
+            without_icon: true,
             as_icon: false,
             class: "btn-sm max-w-[100px] hidden md:flex btn btn-primary"
           ]}
