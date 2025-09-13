@@ -72,16 +72,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
        feed_ids: nil,
        feed_component_id: nil,
        page_info: nil,
-       show_search_filters: false,
-        page_header_aside: [
-         {Bonfire.UI.Common.SmartInputButtonLive,
-          [
-            prompt: l("Compose"),
-            without_icon: true,
-            as_icon: false,
-            class: "btn-sm max-w-[100px] hidden md:flex btn btn-primary"
-          ]}
-       ],
+       show_search_filters: false
      )
      # TODO: only assign for native?
      |> assign(tab_assigns("home"))}
