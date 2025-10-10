@@ -43,6 +43,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       # Extension Modules
       import_types(Bonfire.Me.API.GraphQL)
       import_types(Bonfire.Social.API.GraphQL)
+      import_types(Bonfire.Files.API.GraphQL)
 
       # import_types(CommonsPub.Locales.GraphQL.Schema)
 
@@ -63,6 +64,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # Extension Modules
         import_fields(:me_queries)
         import_fields(:social_queries)
+
+      import_types(:files_queries)
 
         # import_fields(:profile_queries)
         # import_fields(:character_queries)
@@ -90,6 +93,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # Extension Modules
         import_fields(:me_mutations)
         import_fields(:social_mutations)
+
+        import_types(:files_mutations)
 
         import_fields(:tag_mutations)
         import_fields(:classify_mutations)
@@ -167,6 +172,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           :category,
           # :group,
           # :topic,
+          :media,
           :tag,
           :spatial_thing,
           :intent,
@@ -268,6 +274,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Me.API.GraphQL)
       import_types(Bonfire.Social.API.GraphQL)
 
+      import_types(Bonfire.Files.API.GraphQL)
+
       # import_types(Bonfire.Poll.API.GraphQL)
 
       # import_types(CommonsPub.Locales.GraphQL.Schema)
@@ -289,6 +297,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # Extension Modules
         import_fields(:me_queries)
         import_fields(:social_queries)
+
+        import_fields(:files_queries)
 
         # import_fields(:poll_queries)
 
@@ -317,6 +327,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # Extension Modules
         import_fields(:me_mutations)
         import_fields(:social_mutations)
+
+        import_fields(:files_mutations)
 
         # import_fields(:poll_mutations)
 
