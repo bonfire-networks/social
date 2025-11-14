@@ -3,7 +3,7 @@
   "flex flex-col bg-base-100 gap-2",
   "border border-base-content/10": !current_user_id(@__context__)
 }>
-  <div
+  <!-- <div
     style={"background-image: url(#{Config.get([:ui, :theme, :instance_image], nil)});height: 220px;"}
     class="bg-center bg-no-repeat bg-cover"
   >
@@ -11,7 +11,7 @@
   <div class="p-4 flex flex-col gap-3">
     <h1 class="text-2xl text-base-content text-center font-bold">{Config.get([:ui, :theme, :instance_name], Bonfire.Application.name_and_flavour())}</h1>
     <h2 class="text-lg text-center font-medium text-base-content780">{Config.get([:ui, :theme, :instance_tagline], "Welcome to #{Bonfire.Application.name_and_flavour()}")}</h2>
-  </div>
+  </div> -->
   {!-- TODO: use WidgetsLive here, so the list and order can be changed in config & user settings --}    
   {#case @default_feed}
     {#match :curated}

@@ -42,7 +42,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
     ]
 
     default_feed =
-      Settings.get([Bonfire.Web.Views.DashboardLive, :default_feed], :popular,
+      Settings.get([Bonfire.Web.Views.DashboardLive, :default_feed], :my,
         current_user: current_user
       )
 
