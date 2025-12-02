@@ -24,9 +24,29 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       Define dataloaders
       see https://hexdocs.pm/absinthe/1.4.6/ecto.html#dataloader
       """
-      def context(ctx), do: Bonfire.API.GraphQL.Schema.context(ctx)
+      def context(ctx) do
+        loader =
+          Dataloader.new()
+          |> Dataloader.add_source(
+            Needle.Pointer,
+            Bonfire.Common.Needles.dataloader(ctx)
+          )
+          |> Dataloader.add_source(
+            :user_interactions,
+            Bonfire.Social.API.UserInteractionsDataloader.data()
+          )
 
-      def plugins, do: Bonfire.API.GraphQL.Schema.plugins()
+        Map.put(ctx, :loader, loader)
+      end
+
+      def plugins do
+        [
+          Absinthe.Middleware.Async,
+          Absinthe.Middleware.Batch,
+          Absinthe.Middleware.Dataloader
+        ] ++
+          Absinthe.Plugin.defaults()
+      end
 
       def middleware(middleware, _field, _object) do
         # [{Bonfire.API.GraphQL.Middleware.Debug, :start}] ++
