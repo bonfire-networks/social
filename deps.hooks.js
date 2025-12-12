@@ -28,9 +28,11 @@ import { GeolocateHooks } from "./../../deps/bonfire_geolocate/assets/js/extensi
 
 // import { EncryptHooks } from "./../../deps/bonfire_encrypt/assets/js/extension"
 
+import { NotifyHooks } from "./../../deps/bonfire_notify/assets/js/extension"
+
 // import LiveSelect from "./../../deps/live_select/assets/js/live_select"
 import LiveSelect from "./../../deps/live_select/priv/static/live_select.min.js"
 
-Object.assign(ExtensionHooks, LiveSelect, GeolocateHooks) // CopyHooks, TooltipHooks, EditorCkHooks, EditorQuillHooks
+Object.assign(ExtensionHooks, LiveSelect, NotifyHooks, GeolocateHooks) // CopyHooks, TooltipHooks, EditorCkHooks, EditorQuillHooks
 
 export { ExtensionHooks }
