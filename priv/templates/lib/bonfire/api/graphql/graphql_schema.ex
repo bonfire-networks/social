@@ -183,7 +183,6 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           # :collection,
           # :comment,
           # :flag,
-          # :follow,
           :activity,
           :post,
           # :poll,
@@ -197,7 +196,10 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           :spatial_thing,
           :intent,
           :process,
-          :economic_event
+          :economic_event,
+          :boost,
+          :like,
+          :follow
         ])
 
         resolve_type(&schema_to_api_type/2)
@@ -419,7 +421,6 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           # :collection,
           # :comment,
           # :flag,
-          # :follow,
           :activity,
           :post,
           # :poll,
@@ -428,8 +429,11 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           # :group,
           # :topic,
           :category,
-          :tag
+          :tag,
           # :spatial_thing
+          :boost,
+          :like,
+          :follow
         ])
 
         resolve_type(&schema_to_api_type/2)
@@ -455,6 +459,12 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
 
           Bonfire.Data.Social.Follow ->
             :follow
+
+          Bonfire.Data.Social.Boost ->
+            :boost
+
+          Bonfire.Data.Social.Like ->
+            :like
 
           Bonfire.Data.SharedUser ->
             :organisation
