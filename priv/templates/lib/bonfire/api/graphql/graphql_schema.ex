@@ -256,15 +256,16 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       see https://hexdocs.pm/absinthe/1.4.6/ecto.html#dataloader
       """
       def context(ctx) do
-        # IO.inspect(ctx: ctx)
         loader =
-          Dataloader.add_source(
-            Dataloader.new(),
+          Dataloader.new()
+          |> Dataloader.add_source(
             Needle.Pointer,
             Bonfire.Common.Needles.dataloader(ctx)
           )
-
-        # |> Dataloader.add_source(Bonfire.Data.Social.Posts, Bonfire.Common.Needles.dataloader(ctx) )
+          |> Dataloader.add_source(
+            :user_interactions,
+            Bonfire.Social.API.UserInteractionsDataloader.data()
+          )
 
         Map.put(ctx, :loader, loader)
       end
