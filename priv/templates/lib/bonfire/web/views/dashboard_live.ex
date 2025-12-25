@@ -63,6 +63,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
        default_feed: default_feed,
        is_guest?: is_guest?,
        without_sidebar: is_guest?,
+       without_secondary_widgets: :never,
        no_header: is_guest?,
        page_title: page_title,
        sidebar_widgets: sidebar_widgets,
