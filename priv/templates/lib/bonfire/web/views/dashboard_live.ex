@@ -26,6 +26,8 @@ defmodule Bonfire.Web.Views.DashboardLive do
                 true,
                 current_user: current_user
               ) && {Bonfire.Tag.Web.WidgetTagsLive, []},
+                          {Bonfire.UI.Social.WidgetTrendingLinksLive, []},
+
               Settings.get([Bonfire.Web.Views.DashboardLive, :include, :admins], true,
                 current_user: current_user
               ) &&
