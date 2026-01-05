@@ -16,7 +16,6 @@ defmodule Bonfire.Web.Views.DashboardLive do
     is_guest? = is_nil(current_user)
 
     sidebar_widgets = [
-
       users: [
         secondary:
           Enum.filter(
@@ -26,8 +25,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
                 true,
                 current_user: current_user
               ) && {Bonfire.Tag.Web.WidgetTagsLive, []},
-                          {Bonfire.UI.Social.WidgetTrendingLinksLive, []},
-
+              {Bonfire.UI.Social.WidgetTrendingLinksLive, []},
               Settings.get([Bonfire.Web.Views.DashboardLive, :include, :admins], true,
                 current_user: current_user
               ) &&
@@ -42,6 +40,17 @@ defmodule Bonfire.Web.Views.DashboardLive do
           )
       ]
     ]
+
+    # Main content widgets for dashboard (when no specific feed is selected)
+    main_widgets =
+      Enum.filter(
+        [
+          {Bonfire.UI.Social.WidgetTrendingLinksLive,
+           [limit: 5, widget_title: l("Trending Links")]}
+          # Future widgets can be added here
+        ],
+        & &1
+      )
 
     default_feed =
       Settings.get([Bonfire.Web.Views.DashboardLive, :default_feed], :my,
@@ -69,6 +78,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
        no_header: is_guest?,
        page_title: page_title,
        sidebar_widgets: sidebar_widgets,
+       main_widgets: main_widgets,
        loading: true,
        feed: nil,
        feed_id: nil,

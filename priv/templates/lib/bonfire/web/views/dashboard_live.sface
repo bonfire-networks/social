@@ -1,6 +1,6 @@
 <section data-id="user_dashboard" class="">
 <div class={
-  "flex flex-col bg-base-100 gap-2",
+  "flex flex-col bg-base-100 gap-2 p-3",
   "border border-base-content/10": !current_user_id(@__context__)
 }>
   {!-- <div
@@ -41,13 +41,41 @@
         hide_filters
       />
     {#match _}
-      <div class="border border-primary/30  border-dashed rounded-xl p-4 flex flex-col gap-4 m-4 text-center text-base-content/80 flex items-center place-content-center flex-col">
-        <div>{l "You can customise your dashboard by adding widgets here."}</div>
-        <LinkLive class="link link-primary flex items-center gap-2" to={~p"/settings/user/dashboard"}> 
-        <#Icon iconify="ph:gear-fill" class="w-5 h-5" />
-        {l "Configure"}</LinkLive>
-      </div>
-      <!-- <StatelessComponent module={maybe_component(Bonfire.UI.Social.WidgetDiscussionsLive, @__context__)} /> -->
+      {#case @main_widgets
+        |> Enum.map(fn
+          {component, component_assigns} ->
+            %{
+              module: component,
+              data: component_assigns,
+              type: Surface.Component
+            }
+
+          %{} = widget ->
+            widget
+
+          _ ->
+            nil
+        end)
+        |> Enum.reject(&is_nil/1)}
+        {#match widgets when is_list(widgets) and widgets != []}
+          <Bonfire.UI.Common.WidgetsLive
+            widgets={widgets}
+            page={@page}
+            selected_tab={@selected_tab}
+            showing_within={:main}
+            container_class="flex flex-col gap-4"
+            id="dashboard_main_widgets"
+            with_title
+          />
+        {#match _}
+          <div class="border border-primary/30 border-dashed rounded-xl p-4 flex flex-col gap-4 m-4 text-center text-base-content/80 flex items-center place-content-center flex-col">
+            <div>{l "You can customise your dashboard by adding widgets here."}</div>
+            <LinkLive class="link link-primary flex items-center gap-2" to={~p"/settings/user/dashboard"}>
+              <#Icon iconify="ph:gear-fill" class="w-5 h-5" />
+              {l "Configure"}
+            </LinkLive>
+          </div>
+      {/case}
   {/case}
     </div>
 </section>
