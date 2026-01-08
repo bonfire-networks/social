@@ -25,7 +25,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
                 true,
                 current_user: current_user
               ) && {Bonfire.Tag.Web.WidgetTagsLive, []},
-              {Bonfire.UI.Social.WidgetTrendingLinksLive, []},
+              # {Bonfire.UI.Social.WidgetTrendingLinksLive, []},
               Settings.get([Bonfire.Web.Views.DashboardLive, :include, :admins], true,
                 current_user: current_user
               ) &&
@@ -46,8 +46,13 @@ defmodule Bonfire.Web.Views.DashboardLive do
       Enum.filter(
         [
           {Bonfire.UI.Social.WidgetTrendingLinksLive,
-           [limit: 5, widget_title: l("Trending Links")]}
-          # Future widgets can be added here
+           [limit: 5, widget_title: l("Trending Links")]},
+          current_user &&
+            {Bonfire.UI.Social.WidgetRecentArticlesLive,
+             [limit: 5, widget_title: l("Recent Articles")]},
+          current_user &&
+            {Bonfire.UI.Social.WidgetSuggestedProfilesLive,
+             [widget_title: l("Who to follow")]}
         ],
         & &1
       )
