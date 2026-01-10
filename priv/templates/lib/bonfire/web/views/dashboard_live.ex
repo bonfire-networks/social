@@ -45,12 +45,27 @@ defmodule Bonfire.Web.Views.DashboardLive do
     main_widgets =
       Enum.filter(
         [
-          {Bonfire.UI.Social.WidgetTrendingLinksLive,
-           [limit: 5, widget_title: l("Trending Links")]},
+          Settings.get(
+            [Bonfire.Web.Views.DashboardLive, :include, :trending_links],
+            true,
+            current_user: current_user
+          ) &&
+            {Bonfire.UI.Social.WidgetTrendingLinksLive,
+             [limit: 5, widget_title: l("Trending Links")]},
           current_user &&
+            Settings.get(
+              [Bonfire.Web.Views.DashboardLive, :include, :recent_articles],
+              true,
+              current_user: current_user
+            ) &&
             {Bonfire.UI.Social.WidgetRecentArticlesLive,
              [limit: 5, widget_title: l("Recent Articles")]},
           current_user &&
+            Settings.get(
+              [Bonfire.Web.Views.DashboardLive, :include, :suggested_profiles],
+              true,
+              current_user: current_user
+            ) &&
             {Bonfire.UI.Social.WidgetSuggestedProfilesLive,
              [widget_title: l("Who to follow")]}
         ],
@@ -58,7 +73,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
       )
 
     default_feed =
-      Settings.get([Bonfire.Web.Views.DashboardLive, :default_feed], :my,
+      Settings.get([Bonfire.Web.Views.DashboardLive, :default_feed], false,
         current_user: current_user
       )
 
