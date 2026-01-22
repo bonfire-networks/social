@@ -85,7 +85,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         import_fields(:me_queries)
         import_fields(:social_queries)
 
-      import_types(:files_queries)
+        import_types(:files_queries)
 
         # import_fields(:profile_queries)
         # import_fields(:character_queries)
@@ -307,7 +307,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Classify.GraphQL.ClassifySchema)
 
       # import_types(Bonfire.Quantify.Units.GraphQL)
-      # import_types(Bonfire.Geolocate.GraphQL)
+      import_types(Bonfire.Geolocate.GraphQL)
 
       # import_types(Bonfire.ValueFlows.API.Schema)
       # import_types(Bonfire.ValueFlows.API.Schema.Subscriptions)
@@ -335,7 +335,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # import_fields(:locales_queries)
 
         # import_fields(:measurement_query)
-        # import_fields(:geolocation_query)
+        import_fields(:geolocation_query)
 
         # ValueFlows
         # import_fields(:value_flows_query)
@@ -358,7 +358,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         import_fields(:tag_mutations)
         import_fields(:classify_mutations)
 
-        # import_fields(:geolocation_mutation)
+        import_fields(:geolocation_mutation)
         # import_fields(:measurement_mutation)
 
         # ValueFlows
@@ -411,6 +411,28 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         resolve_type(&schema_to_api_type/2)
       end
 
+      union :any_object do
+        description("Any type of known object")
+
+        # TODO: autogenerate from extensions or pointers
+        # types(SchemaUtils.context_types)
+
+        types([
+          :post,
+          # :poll,
+          :user,
+          # :organisation,
+          # :group,
+          # :topic,
+          :category,
+          :tag,
+          # :spatial_thing
+          :other
+        ])
+
+        resolve_type(&schema_to_api_type/2)
+      end
+
       union :any_context do
         description("Any type of known object")
 
@@ -434,7 +456,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           # :spatial_thing
           :boost,
           :like,
-          :follow
+          :follow,
+          :other
         ])
 
         resolve_type(&schema_to_api_type/2)
@@ -481,6 +504,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
 
           Bonfire.Tag ->
             :tag
+
+          Bonfire.Data.Social.APActivity ->
+            :other
 
           _ ->
             nil
