@@ -89,7 +89,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
      |> assign(
        page: "about",
        selected_tab: :about,
-       nav_items: Bonfire.Common.ExtensionModule.default_nav(),
+       
        page_header: false,
        default_feed: default_feed,
        is_guest?: is_guest?,
