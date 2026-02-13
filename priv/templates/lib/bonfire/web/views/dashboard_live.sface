@@ -63,7 +63,7 @@
             page={@page}
             selected_tab={@selected_tab}
             showing_within={:main}
-            container_class="flex flex-col gap-4"
+            container_class="flex flex-col gap-2"
             id="dashboard_main_widgets"
             with_title
           />

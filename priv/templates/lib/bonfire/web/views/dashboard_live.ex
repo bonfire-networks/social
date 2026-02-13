@@ -46,6 +46,12 @@ defmodule Bonfire.Web.Views.DashboardLive do
       Enum.filter(
         [
           Settings.get(
+          [Bonfire.Web.Views.DashboardLive, :include, :forecast],
+          true,
+          current_user: current_user
+        ) &&
+          {Bonfire.Geolocate.WidgetForecastLive, [location: Settings.get([Bonfire.Geolocate, :location], nil, current_user: current_user)]},
+          Settings.get(
             [Bonfire.Web.Views.DashboardLive, :include, :trending_links],
             true,
             current_user: current_user
@@ -89,7 +95,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
      |> assign(
        page: "about",
        selected_tab: :about,
-       
+
        page_header: false,
        default_feed: default_feed,
        is_guest?: is_guest?,
