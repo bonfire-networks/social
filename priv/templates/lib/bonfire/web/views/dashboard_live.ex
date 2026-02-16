@@ -97,6 +97,9 @@ defmodule Bonfire.Web.Views.DashboardLive do
        selected_tab: :about,
 
        page_header: false,
+       page_header_aside: [
+         {Bonfire.UI.Me.DashboardConfigDropdownLive, [scope: :user]}
+       ],
        default_feed: default_feed,
        is_guest?: is_guest?,
        without_sidebar: is_guest?,
