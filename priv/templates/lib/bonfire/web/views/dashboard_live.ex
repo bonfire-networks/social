@@ -21,15 +21,26 @@ defmodule Bonfire.Web.Views.DashboardLive do
           Enum.filter(
             [
               Settings.get(
+                [Bonfire.Web.Views.DashboardLive, :include, :instance_status],
+                true,
+                current_user: current_user
+              ) && {Bonfire.UI.Me.WidgetInstanceStatusLive, []},
+              current_user &&
+                Settings.get(
+                  [Bonfire.Web.Views.DashboardLive, :include, :user_status],
+                  true,
+                  current_user: current_user
+                ) && {Bonfire.UI.Me.WidgetUserStatusLive, []},
+              Settings.get(
                 [Bonfire.Web.Views.DashboardLive, :include, :popular_topics],
                 true,
                 current_user: current_user
               ) && {Bonfire.Tag.Web.WidgetTagsLive, []},
               # {Bonfire.UI.Social.WidgetTrendingLinksLive, []},
-              Settings.get([Bonfire.Web.Views.DashboardLive, :include, :admins], true,
-                current_user: current_user
-              ) &&
-                {Bonfire.UI.Me.WidgetAdminsLive, []},
+              # Settings.get([Bonfire.Web.Views.DashboardLive, :include, :admins], true,
+              #   current_user: current_user
+              # ) &&
+              #   {Bonfire.UI.Me.WidgetAdminsLive, []},
               Settings.get(
                 [Bonfire.Web.Views.DashboardLive, :include, :recent_users],
                 true,
