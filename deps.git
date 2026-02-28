@@ -27,6 +27,8 @@ bonfire_poll = "https://github.com/bonfire-networks/bonfire_poll"
 bonfire_geolocate = "https://github.com/bonfire-networks/bonfire_geolocate"
 # bonfire_gatherings = "https://github.com/bonfire-networks/bonfire_gatherings"
 
+bonfire_translation = "https://github.com/bonfire-networks/bonfire_translation"
+
 # bonfire_pages = "https://github.com/bonfire-networks/bonfire_pages"
 # bonfire_ui_groups = "https://github.com/bonfire-networks/bonfire_ui_groups"
 # bonfire_pages_beacon = "https://github.com/bonfire-networks/bonfire_pages_beacon"
