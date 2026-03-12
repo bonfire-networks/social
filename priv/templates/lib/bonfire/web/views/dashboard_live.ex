@@ -57,6 +57,12 @@ defmodule Bonfire.Web.Views.DashboardLive do
       Enum.filter(
         [
           Settings.get(
+            [Bonfire.Web.Views.DashboardLive, :include, :instance_pinned],
+            true,
+            current_user: current_user
+          ) &&
+            %{module: Bonfire.UI.Common.InstancePinnedLive, data: [], type: Surface.LiveComponent},
+          Settings.get(
           [Bonfire.Web.Views.DashboardLive, :include, :forecast],
           true,
           current_user: current_user
