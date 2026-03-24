@@ -25,12 +25,16 @@ defmodule Bonfire.Web.Views.DashboardLive do
                 true,
                 current_user: current_user
               ) && {Bonfire.UI.Me.WidgetInstanceStatusLive, []},
-              current_user &&
-                Settings.get(
-                  [Bonfire.Web.Views.DashboardLive, :include, :user_status],
-                  true,
-                  current_user: current_user
-                ) && {Bonfire.UI.Me.WidgetUserStatusLive, []},
+              Settings.get(
+                [Bonfire.Web.Views.DashboardLive, :include, :forecast],
+                true,
+                current_user: current_user
+              ) &&
+                {Bonfire.Geolocate.WidgetForecastLive,
+                 [
+                   location:
+                     Settings.get([Bonfire.Geolocate, :location], nil, current_user: current_user)
+                 ]},
               Settings.get(
                 [Bonfire.Web.Views.DashboardLive, :include, :popular_topics],
                 true,
@@ -62,12 +66,13 @@ defmodule Bonfire.Web.Views.DashboardLive do
             current_user: current_user
           ) &&
             %{module: Bonfire.UI.Common.InstancePinnedLive, data: [], type: Surface.LiveComponent},
-          Settings.get(
-          [Bonfire.Web.Views.DashboardLive, :include, :forecast],
-          true,
-          current_user: current_user
-        ) &&
-          {Bonfire.Geolocate.WidgetForecastLive, [location: Settings.get([Bonfire.Geolocate, :location], nil, current_user: current_user)]},
+          current_user &&
+            Settings.get(
+              [Bonfire.Web.Views.DashboardLive, :include, :suggested_profiles],
+              true,
+              current_user: current_user
+            ) &&
+            {Bonfire.UI.Social.WidgetSuggestedProfilesLive, [widget_title: l("Who to follow")]},
           Settings.get(
             [Bonfire.Web.Views.DashboardLive, :include, :trending_links],
             true,
@@ -82,15 +87,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
               current_user: current_user
             ) &&
             {Bonfire.UI.Social.WidgetRecentArticlesLive,
-             [limit: 5, widget_title: l("Recent Articles")]},
-          current_user &&
-            Settings.get(
-              [Bonfire.Web.Views.DashboardLive, :include, :suggested_profiles],
-              true,
-              current_user: current_user
-            ) &&
-            {Bonfire.UI.Social.WidgetSuggestedProfilesLive,
-             [widget_title: l("Who to follow")]}
+             [limit: 5, widget_title: l("Recent Articles")]}
         ],
         & &1
       )
