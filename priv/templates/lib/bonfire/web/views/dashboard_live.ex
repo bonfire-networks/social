@@ -87,7 +87,15 @@ defmodule Bonfire.Web.Views.DashboardLive do
               current_user: current_user
             ) &&
             {Bonfire.UI.Social.WidgetRecentArticlesLive,
-             [limit: 5, widget_title: l("Recent Articles")]}
+             [limit: 5, widget_title: l("Recent Articles")]},
+          current_user &&
+            Settings.get(
+              [Bonfire.Web.Views.DashboardLive, :include, :trending_discussions],
+              true,
+              current_user: current_user
+            ) &&
+            {Bonfire.UI.Social.WidgetTrendingDiscussionsLive,
+             [limit: 5, widget_title: l("Top discussions")]}
         ],
         & &1
       )
@@ -109,7 +117,6 @@ defmodule Bonfire.Web.Views.DashboardLive do
      |> assign(
        page: "about",
        selected_tab: :about,
-
        page_header: false,
        page_header_aside: [
          {Bonfire.UI.Me.DashboardConfigDropdownLive, [scope: :user]}
