@@ -3,7 +3,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
   The main instance home page, mainly for guests visiting the instance
   """
   use Bonfire.UI.Common.Web, :surface_live_view
-  use_if_enabled(Bonfire.UI.Common.Web.Native, :view)
+  # use_if_enabled(Bonfire.UI.Common.Web.Native, :view)
 
   declare_nav_link(l("Dashboard"), page: "dashboard", icon: "carbon:home")
 
@@ -15,26 +15,37 @@ defmodule Bonfire.Web.Views.DashboardLive do
     current_user = current_user(socket)
     is_guest? = is_nil(current_user)
 
+    community_links =
+      Config.get([:ui, :theme, :instance_welcome, :links], [])
+      |> Bonfire.UI.Common.WidgetCommunityLinksLive.normalize_links()
+
     sidebar_widgets = [
       users: [
         secondary:
           Enum.filter(
             [
+              {Bonfire.UI.Common.WidgetCommunityLinksLive, [links: community_links]},
               Settings.get(
-                [Bonfire.Web.Views.DashboardLive, :include, :instance_status],
-                true,
-                current_user: current_user
-              ) && {Bonfire.UI.Me.WidgetInstanceStatusLive, []},
-              Settings.get(
-                [Bonfire.Web.Views.DashboardLive, :include, :forecast],
+                [Bonfire.Web.Views.DashboardLive, :include, :getting_started],
                 true,
                 current_user: current_user
               ) &&
-                {Bonfire.Geolocate.WidgetForecastLive,
-                 [
-                   location:
-                     Settings.get([Bonfire.Geolocate, :location], nil, current_user: current_user)
-                 ]},
+                {Bonfire.UI.Social.WidgetGettingStartedLive, [type: Surface.LiveComponent]},
+              # Settings.get(
+              #   [Bonfire.Web.Views.DashboardLive, :include, :instance_status],
+              #   true,
+              #   current_user: current_user
+              # ) && {Bonfire.UI.Me.WidgetInstanceStatusLive, []},
+              # Settings.get(
+              #   [Bonfire.Web.Views.DashboardLive, :include, :forecast],
+              #   true,
+              #   current_user: current_user
+              # ) &&
+              #   {Bonfire.Geolocate.WidgetForecastLive,
+              #    [
+              #      location:
+              #        Settings.get([Bonfire.Geolocate, :location], nil, current_user: current_user)
+              #    ]},
               Settings.get(
                 [Bonfire.Web.Views.DashboardLive, :include, :popular_topics],
                 true,
@@ -66,6 +77,14 @@ defmodule Bonfire.Web.Views.DashboardLive do
             current_user: current_user
           ) &&
             %{module: Bonfire.UI.Common.InstancePinnedLive, data: [], type: Surface.LiveComponent},
+            current_user &&
+            Settings.get(
+              [Bonfire.Web.Views.DashboardLive, :include, :trending_discussions],
+              true,
+              current_user: current_user
+            ) &&
+            {Bonfire.UI.Social.WidgetTrendingDiscussionsLive,
+             [limit: 5, widget_title: l("Top discussions")]},
           current_user &&
             Settings.get(
               [Bonfire.Web.Views.DashboardLive, :include, :suggested_profiles],
@@ -73,13 +92,13 @@ defmodule Bonfire.Web.Views.DashboardLive do
               current_user: current_user
             ) &&
             {Bonfire.UI.Social.WidgetSuggestedProfilesLive, [widget_title: l("Who to follow")]},
-          Settings.get(
-            [Bonfire.Web.Views.DashboardLive, :include, :trending_links],
-            true,
-            current_user: current_user
-          ) &&
-            {Bonfire.UI.Social.WidgetTrendingLinksLive,
-             [limit: 5, widget_title: l("Trending Links")]},
+          # Settings.get(
+          #   [Bonfire.Web.Views.DashboardLive, :include, :trending_links],
+          #   true,
+          #   current_user: current_user
+          # ) &&
+          #   {Bonfire.UI.Social.WidgetTrendingLinksLive,
+          #    [limit: 5, widget_title: l("Trending Links")]},
           current_user &&
             Settings.get(
               [Bonfire.Web.Views.DashboardLive, :include, :recent_articles],
@@ -87,15 +106,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
               current_user: current_user
             ) &&
             {Bonfire.UI.Social.WidgetRecentArticlesLive,
-             [limit: 5, widget_title: l("Recent Articles")]},
-          current_user &&
-            Settings.get(
-              [Bonfire.Web.Views.DashboardLive, :include, :trending_discussions],
-              true,
-              current_user: current_user
-            ) &&
-            {Bonfire.UI.Social.WidgetTrendingDiscussionsLive,
-             [limit: 5, widget_title: l("Top discussions")]}
+             [limit: 5, widget_title: l("Recent Articles")]}
         ],
         & &1
       )
@@ -117,6 +128,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
      |> assign(
        page: "about",
        selected_tab: :about,
+
        page_header: false,
        page_header_aside: [
          # {Bonfire.UI.Me.DashboardConfigDropdownLive, [scope: :user]}
