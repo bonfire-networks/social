@@ -46,11 +46,6 @@ defmodule Bonfire.Web.Views.DashboardLive do
               #      location:
               #        Settings.get([Bonfire.Geolocate, :location], nil, current_user: current_user)
               #    ]},
-              Settings.get(
-                [Bonfire.Web.Views.DashboardLive, :include, :popular_topics],
-                true,
-                current_user: current_user
-              ) && {Bonfire.Tag.Web.WidgetTagsLive, []},
               current_user &&
                 Settings.get(
                   [Bonfire.Web.Views.DashboardLive, :include, :recent_articles],
@@ -59,6 +54,11 @@ defmodule Bonfire.Web.Views.DashboardLive do
                 ) &&
                 {Bonfire.UI.Social.WidgetRecentArticlesLive,
                  [limit: 5, widget_title: l("Recent Articles"), image_position: :bottom]},
+              Settings.get(
+                [Bonfire.Web.Views.DashboardLive, :include, :popular_topics],
+                true,
+                current_user: current_user
+              ) && {Bonfire.Tag.Web.WidgetTagsLive, []},
               # {Bonfire.UI.Social.WidgetTrendingLinksLive, []},
               # Settings.get([Bonfire.Web.Views.DashboardLive, :include, :admins], true,
               #   current_user: current_user
@@ -93,6 +93,14 @@ defmodule Bonfire.Web.Views.DashboardLive do
             ) &&
             {Bonfire.UI.Social.WidgetTrendingDiscussionsLive,
              [limit: 5, widget_title: l("Top discussions")]},
+          current_user &&
+            Settings.get(
+              [Bonfire.Web.Views.DashboardLive, :include, :polls_closing_soon],
+              true,
+              current_user: current_user
+            ) &&
+            {Bonfire.Poll.Web.WidgetPollsClosingSoonLive,
+             [limit: 3, widget_title: l("Polls closing soon")]},
           current_user &&
             Settings.get(
               [Bonfire.Web.Views.DashboardLive, :include, :suggested_profiles],
