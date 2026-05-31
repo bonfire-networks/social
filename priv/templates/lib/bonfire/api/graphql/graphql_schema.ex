@@ -35,6 +35,10 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
             :user_interactions,
             Bonfire.Social.API.UserInteractionsDataloader.data()
           )
+          |> Dataloader.add_source(
+            :follow_counts,
+            Bonfire.Me.API.FollowCountsDataloader.data()
+          )
 
         Map.put(ctx, :loader, loader)
       end
@@ -196,7 +200,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           # :flag,
           :activity,
           :post,
-          # :poll,
+          :poll,
           :user,
           # :organisation,
           :category,
@@ -276,6 +280,10 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           |> Dataloader.add_source(
             :user_interactions,
             Bonfire.Social.API.UserInteractionsDataloader.data()
+          )
+          |> Dataloader.add_source(
+            :follow_counts,
+            Bonfire.Me.API.FollowCountsDataloader.data()
           )
 
         Map.put(ctx, :loader, loader)
@@ -441,7 +449,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
 
         types([
           :post,
-          # :poll,
+          :poll,
           :user,
           # :organisation,
           # :group,
@@ -468,7 +476,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           # :flag,
           :activity,
           :post,
-          # :poll,
+          :poll,
           :user,
           # :organisation,
           # :group,
