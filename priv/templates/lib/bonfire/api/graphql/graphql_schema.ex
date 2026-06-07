@@ -550,18 +550,13 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
 
             type_match_fun.(type) ||
               (
-                IO.warn(
-                  "any_context: no API type is defined for schema, you need to add it to the graphql schema module: #{inspect(type)}"
-                )
-
-                IO.puts("the object: #{inspect(object)}")
+                warn(object, "any_context: no API type is defined for schema type #{inspect(type)}, you need to add it to the graphql schema module")
                 nil
               )
 
           _ ->
-            IO.warn("any_context: object resolved to an unknown type: #{inspect(object)}")
-
-            nil
+            warn(object, "any_context: object resolved to an unknown type")
+            :other
         end
       end
     end
