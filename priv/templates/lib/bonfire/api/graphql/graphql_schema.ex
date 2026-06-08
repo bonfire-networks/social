@@ -68,6 +68,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Me.API.GraphQL)
       import_types(Bonfire.Social.API.GraphQL)
       import_types(Bonfire.Social.Events.API.GraphQL)
+      import_types(Bonfire.Social.Graph.API.GraphQL)
       import_types(Bonfire.Files.API.GraphQL)
 
       # import_types(CommonsPub.Locales.GraphQL.Schema)
@@ -316,6 +317,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Me.API.GraphQL)
       import_types(Bonfire.Social.API.GraphQL)
       import_types(Bonfire.Social.Events.API.GraphQL)
+      import_types(Bonfire.Social.Graph.API.GraphQL)
 
       import_types(Bonfire.Files.API.GraphQL)
 
