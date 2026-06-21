@@ -202,6 +202,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           :activity,
           :post,
           :poll,
+          :event,
           :user,
           # :organisation,
           :category,
@@ -215,7 +216,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           :economic_event,
           :boost,
           :like,
-          :follow
+          :follow,
+          :other
         ])
 
         resolve_type(&schema_to_api_type/2)
@@ -228,6 +230,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
             &maybe_schema_to_api_type/1
           )
       end
+
+      def maybe_schema_to_api_type(%Bonfire.Data.Social.APActivity{} = ap_activity),
+        do: ap_activity_api_type(ap_activity)
 
       def maybe_schema_to_api_type(%struct{}), do: maybe_schema_to_api_type(struct)
 
@@ -242,10 +247,17 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           ValueFlows.EconomicEvent ->
             :economic_event
 
+          Bonfire.Data.Social.APActivity ->
+            :other
+
           _ ->
             Bonfire.API.GraphQL.Schema.maybe_schema_to_api_type(struct)
         end
       end
+
+      defp ap_activity_api_type(%{json: %{"object" => %{"type" => "Event"}}}), do: :event
+      defp ap_activity_api_type(%{json: %{"type" => "Event"}}), do: :event
+      defp ap_activity_api_type(_), do: :other
     end
   else
     # without ValueFlows
@@ -452,11 +464,13 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         types([
           :post,
           :poll,
+          :event,
           :user,
           # :organisation,
           # :group,
           # :topic,
           :category,
+          :media,
           :tag,
           # :spatial_thing
           :other
@@ -479,11 +493,13 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           :activity,
           :post,
           :poll,
+          :event,
           :user,
           # :organisation,
           # :group,
           # :topic,
           :category,
+          :media,
           :tag,
           # :spatial_thing
           :boost,
@@ -499,6 +515,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         maybe_schema_to_api_type(object) ||
           schema_to_api_type_fallback(object)
       end
+
+      def maybe_schema_to_api_type(%Bonfire.Data.Social.APActivity{} = ap_activity),
+        do: ap_activity_api_type(ap_activity)
 
       def maybe_schema_to_api_type(%struct{}), do: maybe_schema_to_api_type(struct)
 
@@ -537,6 +556,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           Bonfire.Tag ->
             :tag
 
+          Bonfire.Files.Media ->
+            :media
+
           Bonfire.Data.Social.APActivity ->
             :other
 
@@ -544,6 +566,10 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
             nil
         end
       end
+
+      defp ap_activity_api_type(%{json: %{"object" => %{"type" => "Event"}}}), do: :event
+      defp ap_activity_api_type(%{json: %{"type" => "Event"}}), do: :event
+      defp ap_activity_api_type(_), do: :other
 
       def schema_to_api_type_fallback(object, type_match_fun \\ &maybe_schema_to_api_type/1) do
         case Bonfire.Common.Types.object_type(object) do
