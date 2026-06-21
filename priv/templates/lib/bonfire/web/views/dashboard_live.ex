@@ -84,7 +84,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
             true,
             current_user: current_user
           ) &&
-            %{module: Bonfire.UI.Common.InstancePinnedLive, data: [], type: Surface.LiveComponent},
+            %{module: Bonfire.UI.Reactions.WidgetInstancePinnedCarouselLive, data: [], type: Surface.LiveComponent},
             current_user &&
             Settings.get(
               [Bonfire.Web.Views.DashboardLive, :include, :trending_discussions],
