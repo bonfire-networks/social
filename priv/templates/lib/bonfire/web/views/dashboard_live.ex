@@ -52,7 +52,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
                   true,
                   current_user: current_user
                 ) &&
-                {Bonfire.UI.Social.WidgetRecentArticlesLive,
+                {Bonfire.UI.Articles.WidgetRecentArticlesLive,
                  [limit: 5, widget_title: l("Recent Articles"), image_position: :bottom]},
               Settings.get(
                 [Bonfire.Web.Views.DashboardLive, :include, :popular_topics],
