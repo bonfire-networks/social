@@ -145,9 +145,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         import_fields(:valueflows_observe_mutations)
       end
 
-      # subscription do
-      #   import_fields(:valueflows_subscriptions)
-      # end
+      subscription do
+        import_fields(:social_subscriptions)
+      end
 
       @doc """
       hydrate SDL schema with resolvers
@@ -412,9 +412,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # import_fields(:valueflows_observe_mutations)
       end
 
-      # subscription do
-      #   import_fields(:valueflows_subscriptions)
-      # end
+      subscription do
+        import_fields(:social_subscriptions)
+      end
 
       @doc """
       hydrate SDL schema with resolvers
