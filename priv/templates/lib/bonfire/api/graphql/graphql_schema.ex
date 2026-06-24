@@ -69,6 +69,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Social.API.GraphQL)
       import_types(Bonfire.Social.Events.API.GraphQL)
       import_types(Bonfire.Social.Graph.API.GraphQL)
+      import_types(Bonfire.Notify.API.GraphQL)
       import_types(Bonfire.Files.API.GraphQL)
 
       # import_types(CommonsPub.Locales.GraphQL.Schema)
@@ -95,6 +96,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         import_fields(:me_queries)
         import_fields(:social_queries)
         import_fields(:events_queries)
+        import_fields(:notify_queries)
         import_fields(:search_queries)
 
         import_types(:files_queries)
@@ -127,6 +129,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # Extension Modules
         import_fields(:me_mutations)
         import_fields(:social_mutations)
+        import_fields(:notify_mutations)
 
         import_types(:files_mutations)
 
@@ -330,6 +333,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Social.API.GraphQL)
       import_types(Bonfire.Social.Events.API.GraphQL)
       import_types(Bonfire.Social.Graph.API.GraphQL)
+      import_types(Bonfire.Notify.API.GraphQL)
 
       import_types(Bonfire.Files.API.GraphQL)
 
@@ -359,6 +363,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         import_fields(:me_queries)
         import_fields(:social_queries)
         import_fields(:events_queries)
+        import_fields(:notify_queries)
         import_fields(:search_queries)
 
         import_fields(:files_queries)
@@ -392,6 +397,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # Extension Modules
         import_fields(:me_mutations)
         import_fields(:social_mutations)
+        import_fields(:notify_mutations)
 
         import_fields(:files_mutations)
 
