@@ -63,12 +63,12 @@
             page={@page}
             selected_tab={@selected_tab}
             showing_within={:main}
-            container_class="flex flex-col gap-5"
+            container_class="flex flex-col"
             id="dashboard_main_widgets"
             with_title
           />
         {#match _}
-          <div class="border border-primary/30 border-dashed rounded-xl p-4 flex flex-col gap-4 m-4 text-center text-base-content/80 flex items-center place-content-center flex-col">
+          <div class="border border-secondary border-dashed rounded-xl p-4 flex flex-col gap-4 m-4 text-center text-base-content/80 flex items-center place-content-center flex-col">
             <div>{l "You can customise your dashboard by adding widgets here."}</div>
             <LinkLive class="link link-primary flex items-center gap-2" to={~p"/settings/user/dashboard"}>
               <#Icon iconify="ph:gear-fill" class="w-5 h-5" />

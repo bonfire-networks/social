@@ -5,7 +5,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
   use Bonfire.UI.Common.Web, :surface_live_view
   # use_if_enabled(Bonfire.UI.Common.Web.Native, :view)
 
-  declare_nav_link(l("Dashboard"), page: "dashboard", icon: "carbon:home")
+  declare_nav_link(l("Dashboard"), page: "dashboard", icon: "ph:house-fill")
 
   # on_mount {LivePlugs, [Bonfire.UI.Me.LivePlugs.UserRequired]}
   # TEMP: for testing native app
@@ -15,16 +15,16 @@ defmodule Bonfire.Web.Views.DashboardLive do
     current_user = current_user(socket)
     is_guest? = is_nil(current_user)
 
-    community_links =
-      Config.get([:ui, :theme, :instance_welcome, :links], [])
-      |> Bonfire.UI.Common.WidgetCommunityLinksLive.normalize_links()
+    # community_links =
+    #   Config.get([:ui, :theme, :instance_welcome, :links], [])
+    #   |> Bonfire.UI.Common.WidgetCommunityLinksLive.normalize_links()
 
     sidebar_widgets = [
       users: [
         secondary:
           Enum.filter(
             [
-              {Bonfire.UI.Common.WidgetCommunityLinksLive, [links: community_links]},
+              # {Bonfire.UI.Common.WidgetCommunityLinksLive, [links: community_links]},
               Settings.get(
                 [Bonfire.Web.Views.DashboardLive, :include, :getting_started],
                 true,
