@@ -79,6 +79,12 @@ defmodule Bonfire.Web.Views.DashboardLive do
     main_widgets =
       Enum.filter(
         [
+          current_user &&
+            %{
+              module: Bonfire.UI.Boundaries.WidgetCirclesLive,
+              data: [widget_title: l("Circles")],
+              type: Surface.LiveComponent
+            },
           Settings.get(
             [Bonfire.Web.Views.DashboardLive, :include, :instance_pinned],
             true,
