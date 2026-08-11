@@ -90,7 +90,15 @@ defmodule Bonfire.Web.Views.DashboardLive do
             true,
             current_user: current_user
           ) &&
-          %{module: Bonfire.UI.Reactions.WidgetInstancePinnedCarouselLive, data: [title: l("Spotlight")], type: Surface.LiveComponent},
+          %{
+            module: Bonfire.UI.Reactions.WidgetInstancePinnedCarouselLive,
+            data: [
+              title: l("Spotlight"),
+              title_class:
+                "flex items-center justify-between pb-card text-xs font-normal uppercase tracking-wide text-base-content px-card"
+            ],
+            type: Surface.LiveComponent
+          },
             current_user &&
             Settings.get(
               [Bonfire.Web.Views.DashboardLive, :include, :trending_discussions],
