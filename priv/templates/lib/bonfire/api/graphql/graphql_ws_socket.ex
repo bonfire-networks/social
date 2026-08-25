@@ -31,7 +31,7 @@ if Code.ensure_loaded?(Absinthe.GraphqlWS.Socket) do
             current_user: user,
             current_account: account,
             # the account's id (matches the HTTP context plug), NOT the user id
-            current_account_id: Bonfire.Common.Enums.id(account)
+            current_account_id: Bonfire.Common.Enums.id(account) || Bonfire.Common.Utils.current_account_id(socket)
           }
         else
           other ->
