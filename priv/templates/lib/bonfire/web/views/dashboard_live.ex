@@ -5,7 +5,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
   use Bonfire.UI.Common.Web, :surface_live_view
   # use_if_enabled(Bonfire.UI.Common.Web.Native, :view)
 
-  declare_nav_link(l("Dashboard"), page: "dashboard", icon: "ph:house-fill")
+  declare_nav_link(l("Dashboard"), page: "home", icon: "ph:house-fill")
 
   # on_mount {LivePlugs, [Bonfire.UI.Me.LivePlugs.UserRequired]}
   # TEMP: for testing native app
