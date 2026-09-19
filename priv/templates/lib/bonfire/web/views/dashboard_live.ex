@@ -30,7 +30,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
                 true,
                 current_user: current_user
               ) &&
-                {Bonfire.UI.Social.WidgetGettingStartedLive, [type: Surface.LiveComponent]},
+                {Bonfire.UI.Common.WidgetGettingStartedLive, [type: Surface.LiveComponent]},
               # Settings.get(
               #   [Bonfire.Web.Views.DashboardLive, :include, :instance_status],
               #   true,
