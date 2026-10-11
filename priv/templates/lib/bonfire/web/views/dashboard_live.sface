@@ -12,70 +12,12 @@
     <h1 class="text-2xl text-base-content text-center font-bold">{Config.get([:ui, :theme, :instance_name], Bonfire.Application.name_and_flavour())}</h1>
     <h2 class="text-lg text-center font-medium text-base-content780">{Config.get([:ui, :theme, :instance_tagline], "Welcome to #{Bonfire.Application.name_and_flavour()}")}</h2>
   </div> --}
-  {!-- TODO: use WidgetsLive here, so the list and order can be changed in config & user settings --}    
-  {#case @default_feed}
-    {#match :curated}
-      {!-- TODO: cache --}
-      <StatefulComponent
-        module={maybe_component(Bonfire.UI.Social.FeedLive, e(@__context__, :socket, nil))}
-        id={ComponentID.new(Bonfire.UI.Social.FeedLive, :curated, __MODULE__)}
-        feed_id={:curated}
-        feed_name={:curated}
-        feed_title={l("Curated Activities")}
-        hide_filters
-      />
-    {!-- {#match :popular}
-      <StatelessComponent module={maybe_component(Bonfire.UI.Social.WidgetDiscussionsLive, @__context__)} /> --}
-
-    {#match feed when feed in [:my, true]}
-      <StatefulComponent
-        module={maybe_component(Bonfire.UI.Social.FeedLive, e(@__context__, :socket, nil))}
-        id={ComponentID.new(
-          Bonfire.UI.Social.FeedLive,
-          Bonfire.Social.Feeds.my_feed_id(:inbox, e(@__context__, :socket, nil)),
-          __MODULE__
-        )}
-        feed_id={Bonfire.Social.Feeds.my_feed_id(:inbox, e(@__context__, :socket, nil))}
-        feed_name={:my}
-        feed_title={l("My Following")}
-        hide_filters
-      />
-    {#match _}
-      {#case (assigns[:main_widgets] || [])
-        |> Enum.map(fn
-          {component, component_assigns} ->
-            %{
-              module: component,
-              data: component_assigns,
-              type: Surface.Component
-            }
-
-          %{} = widget ->
-            widget
-
-          _ ->
-            nil
-        end)
-        |> Enum.reject(&is_nil/1)}
-        {#match widgets when is_list(widgets) and widgets != []}
-          <Bonfire.UI.Common.WidgetsLive
-            widgets={widgets}
-            page={@page}
-            selected_tab={@selected_tab}
-            showing_within={:main}
-            container_class="flex flex-col"
-            id="dashboard_main_widgets"
-            with_title
-          />
-        {#match _}
-          <div class="border border-secondary border-dashed rounded-xl p-4 flex flex-col gap-4 m-4 text-center text-base-content/80 flex items-center place-content-center flex-col">
-            <div>{l "You can customise your dashboard by adding widgets here."}</div>
-            <LinkLive class="link link-primary flex items-center gap-2" to={~p"/settings/user/dashboard"}>
-              <#Icon iconify="ph:gear-fill" class="w-5 h-5" />
-              {l "Configure"}
-            </LinkLive>
-          </div>
-      {/case}
-  {/case}
+  <Bonfire.UI.Me.DashboardMainLive
+    widgets={@main_widgets}
+    feed={@dashboard_feed}
+    feed_id={@dashboard_feed_id}
+    page={@page}
+    selected_tab={@selected_tab}
+  />
     </div>
 </section>

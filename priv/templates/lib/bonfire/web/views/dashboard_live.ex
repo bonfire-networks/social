@@ -55,6 +55,16 @@ defmodule Bonfire.Web.Views.DashboardLive do
                 {Bonfire.UI.Articles.WidgetRecentArticlesLive,
                  [limit: 5, widget_title: l("Recent Articles"), image_position: :bottom]},
               Settings.get(
+                [Bonfire.Web.Views.DashboardLive, :include, :community_rules],
+                true,
+                current_user: current_user
+              ) &&
+                Bonfire.Common.Extend.module_enabled?(
+                  Bonfire.CommunityRules.Web.WidgetRulesLive,
+                  current_user
+                ) &&
+                {Bonfire.CommunityRules.Web.WidgetRulesLive, []},
+              Settings.get(
                 [Bonfire.Web.Views.DashboardLive, :include, :popular_topics],
                 true,
                 current_user: current_user
@@ -75,75 +85,11 @@ defmodule Bonfire.Web.Views.DashboardLive do
       ]
     ]
 
-    # Main content widgets for dashboard (when no specific feed is selected)
-    main_widgets =
-      Enum.filter(
-        [
-          current_user &&
-            %{
-              module: Bonfire.UI.Boundaries.WidgetCirclesLive,
-              data: [widget_title: l("Circles")],
-              type: Surface.LiveComponent
-            },
-          Settings.get(
-            [Bonfire.Web.Views.DashboardLive, :include, :instance_pinned],
-            true,
-            current_user: current_user
-          ) &&
-          %{
-            module: Bonfire.UI.Reactions.WidgetInstancePinnedCarouselLive,
-            data: [
-              title: l("Spotlight"),
-              title_class:
-                "flex items-center justify-between pb-card text-xs font-normal uppercase tracking-wide text-base-content px-card"
-            ],
-            type: Surface.LiveComponent
-          },
-            current_user &&
-            Settings.get(
-              [Bonfire.Web.Views.DashboardLive, :include, :trending_discussions],
-              true,
-              current_user: current_user
-            ) &&
-            {Bonfire.UI.Social.WidgetTrendingDiscussionsLive,
-             [limit: 5, widget_title: l("Top discussions")]},
-          current_user &&
-            Settings.get(
-              [Bonfire.Web.Views.DashboardLive, :include, :polls_closing_soon],
-              true,
-              current_user: current_user
-            ) &&
-            {Bonfire.Poll.Web.WidgetPollsClosingSoonLive,
-             [limit: 3, widget_title: l("Polls closing soon")]},
-          current_user &&
-            Settings.get(
-              [Bonfire.Web.Views.DashboardLive, :include, :suggested_profiles],
-              true,
-              current_user: current_user
-            ) &&
-            {Bonfire.UI.Social.WidgetSuggestedProfilesLive, [widget_title: l("Who to follow")]}
-          # Settings.get(
-          #   [Bonfire.Web.Views.DashboardLive, :include, :trending_links],
-          #   true,
-          #   current_user: current_user
-          # ) &&
-          #   {Bonfire.UI.Social.WidgetTrendingLinksLive,
-          #    [limit: 5, widget_title: l("Trending Links")]},
-        ],
-        & &1
-      )
+    main_widgets = Bonfire.UI.Me.Dashboard.main_widgets(main_widget_choices(), current_user)
 
-    default_feed =
-      Settings.get([Bonfire.Web.Views.DashboardLive, :default_feed], false,
-        current_user: current_user
-      )
+    {dashboard_feed, dashboard_feed_id} = Bonfire.UI.Me.Dashboard.feed_assigns(socket)
 
-    page_title =
-      case default_feed do
-        :my -> l("My Following")
-        :curated -> l("Curated activities")
-        _ -> l("Active discussions")
-      end
+    page_title = l("Active discussions")
 
     {:ok,
      socket
@@ -155,7 +101,8 @@ defmodule Bonfire.Web.Views.DashboardLive do
        page_header_aside: [
          # {Bonfire.UI.Me.DashboardConfigDropdownLive, [scope: :user]}
        ],
-       default_feed: default_feed,
+       dashboard_feed: dashboard_feed,
+       dashboard_feed_id: dashboard_feed_id,
        is_guest?: is_guest?,
        without_sidebar: is_guest?,
        without_secondary_widgets: :never,
@@ -173,6 +120,11 @@ defmodule Bonfire.Web.Views.DashboardLive do
      )
      # TODO: only assign for native?
      |> assign(tab_assigns("home"))}
+  end
+
+  @doc "Main-area widgets this flavour offers, in default order (keys of `Bonfire.UI.Me.Dashboard.catalogue/0`)."
+  def main_widget_choices do
+    [:instance_pinned, :trending_discussions, :polls_closing_soon, :suggested_profiles]
   end
 
   # @decorate time()
