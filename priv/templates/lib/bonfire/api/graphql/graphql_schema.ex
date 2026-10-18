@@ -72,6 +72,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Notify.API.GraphQL)
       import_types(Bonfire.Files.API.GraphQL)
 
+      import_types(Bonfire.Poll.API.GraphQL)
+
       # import_types(CommonsPub.Locales.GraphQL.Schema)
 
       import_types(Bonfire.Boundaries.API.GraphQL)
@@ -99,7 +101,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         import_fields(:notify_queries)
         import_fields(:search_queries)
 
-        import_types(:files_queries)
+        import_fields(:files_queries)
+
+        import_fields(:poll_queries)
 
         # import_fields(:profile_queries)
         # import_fields(:character_queries)
@@ -131,7 +135,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         import_fields(:social_mutations)
         import_fields(:notify_mutations)
 
-        import_types(:files_mutations)
+        import_fields(:files_mutations)
+
+        import_fields(:poll_mutations)
 
         import_fields(:boundaries_mutations)
 
@@ -191,6 +197,30 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         resolve_type(&schema_to_api_type/2)
       end
 
+      union :any_object do
+        description("Any type of known object")
+
+        # TODO: autogenerate from extensions or pointers
+        # types(SchemaUtils.context_types)
+
+        types([
+          :post,
+          :poll,
+          :event,
+          :user,
+          # :organisation,
+          # :group,
+          # :topic,
+          :category,
+          :media,
+          :tag,
+          # :spatial_thing
+          :other
+        ])
+
+        resolve_type(&schema_to_api_type/2)
+      end
+
       union :any_context do
         description("Any type of known object")
 
@@ -228,10 +258,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
 
       def schema_to_api_type(object, _ \\ nil) do
         maybe_schema_to_api_type(object) ||
-          Bonfire.API.GraphQL.Schema.schema_to_api_type_fallback(
-            object,
-            &maybe_schema_to_api_type/1
-          )
+          schema_to_api_type_fallback(object)
       end
 
       def maybe_schema_to_api_type(%Bonfire.Data.Social.APActivity{} = ap_activity),
@@ -250,17 +277,71 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           ValueFlows.EconomicEvent ->
             :economic_event
 
+          Bonfire.Data.Identity.User ->
+            :user
+
+          Bonfire.Data.Social.Post ->
+            :post
+
+          Bonfire.Data.Social.Activity ->
+            :activity
+
+          Bonfire.Data.Social.Follow ->
+            :follow
+
+          Bonfire.Data.Social.Boost ->
+            :boost
+
+          Bonfire.Data.Social.Like ->
+            :like
+
+          Bonfire.Data.SharedUser ->
+            :organisation
+
+          Bonfire.Geolocate.Geolocation ->
+            :spatial_thing
+
+          Bonfire.Classify.Category ->
+            :category
+
+          Bonfire.Poll.Question ->
+            :poll
+
+          Bonfire.Tag ->
+            :tag
+
+          Bonfire.Files.Media ->
+            :media
+
           Bonfire.Data.Social.APActivity ->
             :other
 
           _ ->
-            Bonfire.API.GraphQL.Schema.maybe_schema_to_api_type(struct)
+            nil
         end
       end
 
       defp ap_activity_api_type(%{json: %{"object" => %{"type" => "Event"}}}), do: :event
       defp ap_activity_api_type(%{json: %{"type" => "Event"}}), do: :event
       defp ap_activity_api_type(_), do: :other
+
+      def schema_to_api_type_fallback(object, type_match_fun \\ &maybe_schema_to_api_type/1) do
+        # the schema, which `maybe_schema_to_api_type/1` matches on (a category pointer is otherwise `:group`, which resolves to no API type)
+        case Bonfire.Common.Types.object_type_schema(object) do
+          type when is_atom(type) and not is_nil(type) ->
+            debug(type, "any_context: object type recognised :-)")
+
+            type_match_fun.(type) ||
+              (
+                warn(object, "any_context: no API type is defined for schema type #{inspect(type)}, you need to add it to the graphql schema module")
+                nil
+              )
+
+          _ ->
+            warn(object, "any_context: object resolved to an unknown type")
+            :other
+        end
+      end
     end
   else
     # without ValueFlows
@@ -578,7 +659,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       defp ap_activity_api_type(_), do: :other
 
       def schema_to_api_type_fallback(object, type_match_fun \\ &maybe_schema_to_api_type/1) do
-        case Bonfire.Common.Types.object_type(object) do
+        # the schema, which `maybe_schema_to_api_type/1` matches on (a category pointer is otherwise `:group`, which resolves to no API type)
+        case Bonfire.Common.Types.object_type_schema(object) do
           type when is_atom(type) and not is_nil(type) ->
             debug(type, "any_context: object type recognised :-)")
 
