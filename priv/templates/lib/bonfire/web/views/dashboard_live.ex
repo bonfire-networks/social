@@ -11,7 +11,7 @@ defmodule Bonfire.Web.Views.DashboardLive do
   # TEMP: for testing native app
   on_mount {LivePlugs, [Bonfire.UI.Me.LivePlugs.LoadCurrentUser]}
 
-  def mount(_params, _session, socket) do
+  def mount(params, _session, socket) do
     current_user = current_user(socket)
     is_guest? = is_nil(current_user)
 
@@ -87,7 +87,9 @@ defmodule Bonfire.Web.Views.DashboardLive do
 
     main_widgets = Bonfire.UI.Me.Dashboard.main_widgets(main_widget_choices(), current_user)
 
-    {dashboard_feed, dashboard_feed_id} = Bonfire.UI.Me.Dashboard.feed_assigns(socket)
+    # feed tabs link to `?feed=<slug>`
+    {dashboard_feed, dashboard_feed_id} =
+      Bonfire.UI.Me.Dashboard.feed_assigns(socket, e(params, "feed", nil))
 
     page_title = l("Active discussions")
 
