@@ -31,6 +31,14 @@ defmodule Bonfire.Web.Views.DashboardLive do
                 current_user: current_user
               ) &&
                 {Bonfire.UI.Common.WidgetGettingStartedLive, [type: Surface.LiveComponent]},
+              # a flavour adds it with `config :bonfire, Bonfire.Web.Views.DashboardLive, widgets: [sidebar: [:wishes]]`
+              :wishes in e(Config.get([Bonfire.Web.Views.DashboardLive, :widgets], []), :sidebar, []) &&
+                Settings.get(
+                  [Bonfire.Web.Views.DashboardLive, :include, :wishes],
+                  true,
+                  current_user: current_user
+                ) &&
+                {Bonfire.UI.Common.WidgetFeedbackLive, []},
               # Settings.get(
               #   [Bonfire.Web.Views.DashboardLive, :include, :instance_status],
               #   true,
