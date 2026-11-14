@@ -68,7 +68,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Me.API.GraphQL)
       import_types(Bonfire.Social.API.GraphQL)
       # import_types(Bonfire.Social.Events.API.GraphQL)
-      import_types(Bonfire.Gatherings.API.APActivityEventsGraphQL)
+      # TODO: how to modularise: an extension's types only when it is there (bonfire_gatherings may not be in a flavour's deps, and the schema then fails to compile)
+      # import_types(Bonfire.Gatherings.API.APActivityEventsGraphQL)
       import_types(Bonfire.Social.Graph.API.GraphQL)
       import_types(Bonfire.Notify.API.GraphQL)
       import_types(Bonfire.Files.API.GraphQL)
@@ -98,7 +99,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # Extension Modules
         import_fields(:me_queries)
         import_fields(:social_queries)
-        import_fields(:events_queries)
+        # TODO: how to modularise (with the events types above)
+        # import_fields(:events_queries)
         import_fields(:notify_queries)
         import_fields(:search_queries)
 
@@ -207,7 +209,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         types([
           :post,
           :poll,
-          :event,
+          # TODO: how to modularise (with the events types above)
+          # :event,
           :user,
           # :organisation,
           # :group,
@@ -236,7 +239,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           :activity,
           :post,
           :poll,
-          :event,
+          # TODO: how to modularise (with the events types above)
+          # :event,
           :user,
           # :organisation,
           :category,
@@ -322,8 +326,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         end
       end
 
-      defp ap_activity_api_type(%{json: %{"object" => %{"type" => "Event"}}}), do: :event
-      defp ap_activity_api_type(%{json: %{"type" => "Event"}}), do: :event
+      # TODO: how to modularise (with the events types above); an event is resolved by the clauses below meanwhile
+      # defp ap_activity_api_type(%{json: %{"object" => %{"type" => "Event"}}}), do: :event
+      # defp ap_activity_api_type(%{json: %{"type" => "Event"}}), do: :event
       defp ap_activity_api_type(_), do: :other
 
       def schema_to_api_type_fallback(object, type_match_fun \\ &maybe_schema_to_api_type/1) do
@@ -414,7 +419,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Me.API.GraphQL)
       import_types(Bonfire.Social.API.GraphQL)
       # import_types(Bonfire.Social.Events.API.GraphQL)
-      import_types(Bonfire.Gatherings.API.APActivityEventsGraphQL)
+      # TODO: how to modularise: an extension's types only when it is there (bonfire_gatherings may not be in a flavour's deps, and the schema then fails to compile)
+      # import_types(Bonfire.Gatherings.API.APActivityEventsGraphQL)
       import_types(Bonfire.Social.Graph.API.GraphQL)
       import_types(Bonfire.Notify.API.GraphQL)
 
@@ -445,7 +451,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # Extension Modules
         import_fields(:me_queries)
         import_fields(:social_queries)
-        import_fields(:events_queries)
+        # TODO: how to modularise (with the events types above)
+        # import_fields(:events_queries)
         import_fields(:notify_queries)
         import_fields(:search_queries)
 
@@ -553,7 +560,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         types([
           :post,
           :poll,
-          :event,
+          # TODO: how to modularise (with the events types above)
+          # :event,
           :user,
           # :organisation,
           # :group,
@@ -582,7 +590,8 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           :activity,
           :post,
           :poll,
-          :event,
+          # TODO: how to modularise (with the events types above)
+          # :event,
           :user,
           # :organisation,
           # :group,
@@ -656,8 +665,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         end
       end
 
-      defp ap_activity_api_type(%{json: %{"object" => %{"type" => "Event"}}}), do: :event
-      defp ap_activity_api_type(%{json: %{"type" => "Event"}}), do: :event
+      # TODO: how to modularise (with the events types above); an event is resolved by the clauses below meanwhile
+      # defp ap_activity_api_type(%{json: %{"object" => %{"type" => "Event"}}}), do: :event
+      # defp ap_activity_api_type(%{json: %{"type" => "Event"}}), do: :event
       defp ap_activity_api_type(_), do: :other
 
       def schema_to_api_type_fallback(object, type_match_fun \\ &maybe_schema_to_api_type/1) do
