@@ -52,9 +52,14 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           Absinthe.Plugin.defaults()
       end
 
-      def middleware(middleware, _field, _object) do
+      def middleware(middleware, field, object) do
         # [{Bonfire.API.GraphQL.Middleware.Debug, :start}] ++
-        middleware ++ [CollapseErrors]
+        # root fields need a login unless marked `meta public: true`
+        Bonfire.API.GraphQL.Middleware.EnsureAuthorizedAPIClient.middleware(
+          middleware,
+          field,
+          object
+        ) ++ [CollapseErrors]
       end
 
       import_types(Absinthe.Type.Custom)
@@ -401,9 +406,14 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           Absinthe.Plugin.defaults()
       end
 
-      def middleware(middleware, _field, _object) do
+      def middleware(middleware, field, object) do
         # [{Bonfire.API.GraphQL.Middleware.Debug, :start}] ++
-        middleware ++ [CollapseErrors]
+        # root fields need a login unless marked `meta public: true`
+        Bonfire.API.GraphQL.Middleware.EnsureAuthorizedAPIClient.middleware(
+          middleware,
+          field,
+          object
+        ) ++ [CollapseErrors]
       end
 
       import_types(Absinthe.Type.Custom)
