@@ -39,6 +39,14 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
             :follow_counts,
             Bonfire.Me.API.FollowCountsDataloader.data()
           )
+          |> Dataloader.add_source(
+            :visibility,
+            Bonfire.Boundaries.API.VisibilityDataloader.data()
+          )
+          |> Dataloader.add_source(
+            :poll_vote_state,
+            Bonfire.Poll.API.VoteStateDataloader.data()
+          )
 
         Map.put(ctx, :loader, loader)
       end
@@ -392,6 +400,14 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           |> Dataloader.add_source(
             :follow_counts,
             Bonfire.Me.API.FollowCountsDataloader.data()
+          )
+          |> Dataloader.add_source(
+            :visibility,
+            Bonfire.Boundaries.API.VisibilityDataloader.data()
+          )
+          |> Dataloader.add_source(
+            :poll_vote_state,
+            Bonfire.Poll.API.VoteStateDataloader.data()
           )
 
         Map.put(ctx, :loader, loader)
