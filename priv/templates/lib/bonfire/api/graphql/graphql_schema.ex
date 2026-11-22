@@ -97,6 +97,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       # import_types(Bonfire.Gatherings.API.APActivityEventsGraphQL)
       import_types(Bonfire.Social.Graph.API.GraphQL)
       import_types(Bonfire.Notify.API.GraphQL)
+      import_types(Bonfire.Federate.ActivityPub.API.GraphQL)
       import_types(Bonfire.Files.API.GraphQL)
 
       import_types(Bonfire.Poll.API.GraphQL)
@@ -128,6 +129,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # TODO: how to modularise (with the events types above)
         # import_fields(:events_queries)
         import_fields(:notify_queries)
+        import_fields(:federation_queries)
         import_fields(:search_queries)
 
         import_fields(:files_queries)
@@ -479,6 +481,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       # import_types(Bonfire.Gatherings.API.APActivityEventsGraphQL)
       import_types(Bonfire.Social.Graph.API.GraphQL)
       import_types(Bonfire.Notify.API.GraphQL)
+      import_types(Bonfire.Federate.ActivityPub.API.GraphQL)
 
       import_types(Bonfire.Files.API.GraphQL)
 
@@ -511,6 +514,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         # TODO: how to modularise (with the events types above)
         # import_fields(:events_queries)
         import_fields(:notify_queries)
+        import_fields(:federation_queries)
         import_fields(:search_queries)
 
         import_fields(:files_queries)
