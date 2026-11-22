@@ -47,6 +47,14 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
             :poll_vote_state,
             Bonfire.Poll.API.VoteStateDataloader.data()
           )
+          |> Dataloader.add_source(
+            :status_counts,
+            Bonfire.Posts.API.StatusCountsDataloader.data()
+          )
+          |> Dataloader.add_source(
+            :settings,
+            Bonfire.Me.API.SettingsDataloader.data()
+          )
 
         Map.put(ctx, :loader, loader)
       end
@@ -408,6 +416,14 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           |> Dataloader.add_source(
             :poll_vote_state,
             Bonfire.Poll.API.VoteStateDataloader.data()
+          )
+          |> Dataloader.add_source(
+            :status_counts,
+            Bonfire.Posts.API.StatusCountsDataloader.data()
+          )
+          |> Dataloader.add_source(
+            :settings,
+            Bonfire.Me.API.SettingsDataloader.data()
           )
 
         Map.put(ctx, :loader, loader)
