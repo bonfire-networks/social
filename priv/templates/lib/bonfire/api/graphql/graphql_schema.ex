@@ -55,6 +55,10 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
             :settings,
             Bonfire.Me.API.SettingsDataloader.data()
           )
+          |> Dataloader.add_source(
+            :characters,
+            Bonfire.Me.API.CharactersDataloader.data()
+          )
 
         Map.put(ctx, :loader, loader)
       end
@@ -96,6 +100,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Files.API.GraphQL)
 
       import_types(Bonfire.Poll.API.GraphQL)
+      import_types(Bonfire.Messages.API.GraphQL)
 
       # import_types(CommonsPub.Locales.GraphQL.Schema)
 
@@ -128,6 +133,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         import_fields(:files_queries)
 
         import_fields(:poll_queries)
+        import_fields(:messages_queries)
 
         # import_fields(:profile_queries)
         # import_fields(:character_queries)
@@ -260,6 +266,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           :activity,
           :post,
           :poll,
+          :message,
           # TODO: how to modularise (with the events types above)
           # :event,
           :user,
@@ -332,6 +339,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
 
           Bonfire.Poll.Question ->
             :poll
+
+          Bonfire.Data.Social.Message ->
+            :message
 
           Bonfire.Tag ->
             :tag
@@ -425,6 +435,10 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
             :settings,
             Bonfire.Me.API.SettingsDataloader.data()
           )
+          |> Dataloader.add_source(
+            :characters,
+            Bonfire.Me.API.CharactersDataloader.data()
+          )
 
         Map.put(ctx, :loader, loader)
       end
@@ -469,6 +483,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
       import_types(Bonfire.Files.API.GraphQL)
 
       import_types(Bonfire.Poll.API.GraphQL)
+      import_types(Bonfire.Messages.API.GraphQL)
 
       # import_types(CommonsPub.Locales.GraphQL.Schema)
 
@@ -501,6 +516,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
         import_fields(:files_queries)
 
         import_fields(:poll_queries)
+        import_fields(:messages_queries)
 
         # import_fields(:profile_queries)
         # import_fields(:character_queries)
@@ -632,6 +648,7 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
           :activity,
           :post,
           :poll,
+          :message,
           # TODO: how to modularise (with the events types above)
           # :event,
           :user,
@@ -692,6 +709,9 @@ if Application.compile_env(:bonfire_api_graphql, :modularity) != :disabled do
 
           Bonfire.Poll.Question ->
             :poll
+
+          Bonfire.Data.Social.Message ->
+            :message
 
           Bonfire.Tag ->
             :tag
